@@ -1,0 +1,18 @@
+# Syntax-highlight JSON strings or files
+# Usage: `json '{"foo":42}'` or `echo '{"foo":42}' | json`
+function json() {
+    if [ -t 0 ]; then # argument
+        python -mjson.tool <<< "$*" | pygmentize -l javascript;
+    else # pipe
+        python -mjson.tool | pygmentize -l javascript;
+    fi;
+}
+
+# Checks docker volumes for a given container
+function docker-mounts() {
+  if [ -t 0 ]; then
+    docker inspect $1 | jq '.[].Mounts';
+  else
+    echo "usage: docker-mounts container-name-or-hash";
+  fi;
+}

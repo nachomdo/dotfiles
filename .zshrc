@@ -46,8 +46,11 @@ DISABLE_AUTO_TITLE="true"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git zeus rails github rvm web-search autojump hub docker)
 source $ZSH/oh-my-zsh.sh
-source ~/.bashrc
-# . $HOME/HandsOnLab/powerline/powerline/bindings/zsh/powerline.zsh
+
+for DOTFILE in `find $HOME/.dotfiles`; do
+  [ -f $DOTFILE ] && source $DOTFILE;
+done
+
 # User configuration
 # export MANPATH="/usr/local/man:$MANPATH"
 # export PS1="$PS1"'$([ -n "$TMUX" ] && tmux setenv TMUXPWD_$(tmux display -p "#D" | tr -d %) "$PWD")'
@@ -61,16 +64,10 @@ export LC_NUMERIC="en_GB.UTF-8"
 export LC_TIME="en_GB.UTF-8"
 export LC_ALL="en_GB.UTF-8"
 export TERM="xterm-256color"
-
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
+export EDITOR='vim'
 
 # Compilation flags
-# export ARCHFLAGS="-arch x86_64"
+export ARCHFLAGS="-arch x86_64"
 
 # ssh
 # export SSH_KEY_PATH="~/.ssh/dsa_id"
@@ -83,6 +80,9 @@ export TERM="xterm-256color"
 # Example aliases
 alias git='hub'
 alias be='bundle exec'
+alias docker-clean='docker rm $(docker ps -aq)'
+alias docker-clean-images='docker rmi $(docker images -q --filter "dangling=true")'
+#
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
